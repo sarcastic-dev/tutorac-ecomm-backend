@@ -14,11 +14,14 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(uuid())
-  name      String
-  email     String   @unique
-  password  String
-  role      Role     @default(USER)
+  id       String @id @default(uuid())
+  name     String
+  email    String @unique
+  password String
+  role     Role   @default(USER)
+
+  cartItems CartItem[]
+
   createdAt DateTime @default(now())
 }
 
@@ -31,16 +34,43 @@ model Category {
 }
 
 model Product {
-  id          String    @id @default(uuid())
+  id          String  @id @default(uuid())
   name        String
   description String
   price       Float
-  isActive    Boolean   @default(true)
+  isActive    Boolean @default(true)
 
-  categoryId  String
-  category    Category  @relation(fields: [categoryId], references: [id])
+  categoryId String
+  category   Category @relation(fields: [categoryId], references: [id])
 
-  createdAt   DateTime  @default(now())
+  inventory Inventory?
+  cartItems CartItem[]
+
+  createdAt DateTime @default(now())
+}
+
+model Inventory {
+  id                String @id @default(uuid())
+  productId         String @unique
+  stockQuantity     Int
+  lowStockThreshold Int    @default(5)
+
+  product   Product  @relation(fields: [productId], references: [id])
+  createdAt DateTime @default(now())
+}
+
+model CartItem {
+  id        String @id @default(uuid())
+  userId    String
+  productId String
+  quantity  Int
+
+  user    User    @relation(fields: [userId], references: [id])
+  product Product @relation(fields: [productId], references: [id])
+
+  createdAt DateTime @default(now())
+
+  @@unique([userId, productId])
 }
 
 enum Role {

@@ -4,7 +4,7 @@ import * as controller from "./auth.controller";
 export const authRoutes = Router();
 
 authRoutes.get("/health", (_req, res) => {
-  res.json({ status: "Auth service running" });
+  res.json({ status: "Auth service running perfectly" });
 });
 
 authRoutes.post("/signup", controller.signup);
