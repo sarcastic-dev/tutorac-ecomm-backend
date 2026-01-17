@@ -7,5 +7,6 @@ export const errorMiddleware = (
   _next: NextFunction
 ) => {
   console.error(err);
-  res.status(500).json({ message: "Internal Server Error" });
+  const message = err?.message || "Internal Server Error";
+  res.status(400).json({ message });
 };

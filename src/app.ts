@@ -7,6 +7,7 @@ import { categoryRoutes } from "./modules/categories/category.routes";
 import { productRoutes } from "./modules/products/product.routes";
 import { inventoryRoutes } from "./modules/inventory/inventory.routes";
 import { cartRoutes } from "./modules/cart/cart.routes";
+import { orderRoutes } from "./modules/orders/order.routes";
 
 export const app = express();
 
@@ -19,5 +20,6 @@ app.use("/categories", categoryRoutes);
 app.use("/products", productRoutes);
 app.use("/inventory", inventoryRoutes);
 app.use("/cart", cartRoutes);
+app.use("/orders", orderRoutes);
 
 app.use(errorMiddleware);
